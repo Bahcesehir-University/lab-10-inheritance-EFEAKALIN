@@ -163,7 +163,7 @@ int Car::getNumDoors() const { return numDoors;}
 std::string Car::describe() const{
     std::ostringstream oss;
     oss << "Car: " << make << "(" << year <<"), "
-    <<numDoors << " doors, fuel:" << " << fuelLevel << %" ;
+    <<numDoors << " doors, fuel:" << fuelLevel<< " << fuelLevel << %" ;
     return oss.str();
 }
 Truck::Truck(std::string make, int year, double fuelLevel, double payloadTons)
@@ -173,7 +173,7 @@ double Truck::getPayloadTons() const { return payloadTons;}
 std::string Truck::describe() const{
     std::ostringstream oss;
     oss << "Truck: " << make << "(" << year <<"), payload:"
-    <<payloadTons << " t, fuel:" << " << fuelLevel << %" ;
+    <<payloadTons << " t, fuel:" <<  fuelLevel<<" << fuelLevel << %" ;
     return oss.str();
         
     }
