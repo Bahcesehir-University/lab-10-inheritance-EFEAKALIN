@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 
 // ================================================================
 // CLASS DEFINITIONS
@@ -41,20 +42,38 @@ protected:
     //       std::string make
     //       int year
     //       double fuelLevel
-
-public:
+   std::string make;
+   int year;
+   double fuelLevel;
+    
+    public:
     // TODO: declare constructor
     //       Vehicle(std::string make, int year, double fuelLevel)
+    Vehicle(std::string make, int year, double fuelLevel);
 
     // TODO: declare getters (const)
     //       getMake(), getYear(), getFuelLevel()
+ std::string getMake() const;
+    int getYear() const;
+    double getFuelLevel() const;
 
     // TODO: declare refuel(double amount)
     //       Adds amount to fuelLevel. Max is 100.0. Ignore negative amounts.
+    void refuel(double amount) {
+    if (amount <= 0) return;           
+    fuelLevel += amount;
+    if (fuelLevel > 100.0) fuelLevel = 100.0; 
+    
+}
 
     // TODO: declare pure virtual describe() returning std::string
 
+    std::string  virtual describe() const = 0;
+    
     // TODO: declare virtual destructor
+    virtual ~Vehicle() = default;
+    
+
 };
 
 // ----------------------------------------------------------------
@@ -76,13 +95,18 @@ public:
 class Car : public Vehicle {
 private:
     // TODO: int numDoors
+    int numDoors;
 
 public:
     // TODO: Constructor(make, year, fuelLevel, numDoors)
+    Car(std::string make, int year,  double fuelLevel, int numDoors);
+    
 
     // TODO: getNumDoors()
-
+ int getNumDoors() const;
     // TODO: describe() override
+   std::string describe()  const override;
+    
 };
 
 // ----------------------------------------------------------------
@@ -104,11 +128,15 @@ public:
 class Truck : public Vehicle {
 private:
     // TODO: double payloadTons
+    double payloadTons;
 
 public:
     // TODO: Constructor(make, year, fuelLevel, payloadTons)
+    Truck(std::string make, int year,  double fuelLevel, double payloadTons);
 
     // TODO: getPayloadTons()
+    double getPayloadTons() const;
+    std::string describe() const override;
 
     // TODO: describe() override
 };
@@ -120,8 +148,35 @@ public:
 // ----------------------------------------------------------------
 // Vehicle member function implementations
 // ----------------------------------------------------------------
+Vehicle::Vehicle(std::string make, int year, double fuelLevel)
+: make(make), year(year), fuelLevel(fuelLevel){}
+
+std::string Vehicle::getMake() const {return make;}
+int Vehicle::getYear() const{return year;}
+double Vehicle::getFuelLevel() const{ return fuelLevel;}
 
 // TODO: Implement Vehicle constructor
+Car::Car(std::string make, int year, double fuelLevel, int numDoors)
+: Vehicle(make, year, fuelLevel), numDoors(numDoors) {}
+
+int Car::getNumDoors() const { return numDoors;}
+std::string Car::describe() const{
+    std::ostringstream oss;
+    oss << "Car: " << make << "(" << year <<"), "
+    <<numDoors << " doors, fuel:" << " << fuelLevel << %" ;
+    return oss.str();
+}
+Truck::Truck(std::string make, int year, double fuelLevel, double payloadTons)
+: Vehicle(make, year, fuelLevel), payloadTons(payloadTons) {}
+
+double Truck::getPayloadTons() const { return payloadTons;}
+std::string Truck::describe() const{
+    std::ostringstream oss;
+    oss << "Truck: " << make << "(" << year <<"), payload:"
+    <<payloadTons << " t, fuel:" << " << fuelLevel << %" ;
+    return oss.str();
+        
+    }
 
 // TODO: Implement getMake(), getYear(), getFuelLevel()
 
